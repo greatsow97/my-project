@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Lista Studenti</title>
+  </head>
+  <style>
+    body {
+      background: #142439;
+      padding: 0;
+      margin: 0;
+      box-sizing: border-box;
+    }
+    div {
+      width: 100%;
+      background: orange;
+      padding: 40px;
+      border-radius: 20px;
+      margin: 10px;
+    }
+    p {
+      font-size: 20px;
+      font-weight: bold;
+    }
+    h1 {
+      padding: 10px;
+      font-family: roboto;
+      color: rgb(255, 255, 255);
+      text-align: center;
+    }
+  </style>
+
+  <!-- created by sow -->
+  <body>
+    <h1>Lista Studenti</h1>
+
+    <div th:each="s : ${list}">
+      <p th:text="${s.nome}"></p>
+      <p th:text="${s.cognome}"></p>
+      <hr />
+    </div>
+  </body>
+</html>
