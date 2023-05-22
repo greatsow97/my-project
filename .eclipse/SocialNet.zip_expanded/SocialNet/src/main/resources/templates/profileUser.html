@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SowBook</title>
+  </head>
+  <style>
+    body {
+      background-color: #263a4b;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+      padding: 10px 0px;
+    }
+    p {
+      color: white;
+      font-size: 25px;
+    }
+    #center {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    input[type="submit"] {
+      background: #e5ef5c;
+      font-size: 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      outline: none;
+    }
+
+    input[type="button"] {
+      background: #e5ef5c;
+      font-size: 18px;
+      border-radius: 8px;
+      font-weight: 700;
+      cursor: pointer;
+      outline: none;
+    }
+
+    a {
+      color: #ecf0f2;
+      text-decoration: none;
+    }
+  </style>
+
+  <body>
+    <div id="center">
+      <h1 th:text="${utente.username}"></h1>
+      <img th:src="${utente.img}" width="5%" />
+      <p th:text="|nome: ${utente.nome}|"></p>
+      <p th:text="|cognome: ${utente.cognome}|"></p>
+      <p th:text="|email: ${utente.email}|"></p>
+      <p th:text="|ruolo: ${utente.ruolo.ruolo}|"></p>
+
+      <!-- PROVA -->
+
+      <!-- CAMBIA RUOLO -->
+      <div th:if="${utente.ruolo.id == 2 || utente.ruolo.id == 3}">
+        <form th:action="@{/cambia2/{utenteId}(utenteId=${utente.id})}">
+          <input type="submit" value="cambia ruolo" />
+        </form>
+        <!-- FINE CAMBIA RUOLO -->
+        <!-- PROVA BANNA -->
+        <div th:if="${utente.getAttivo() == 1}">
+          <input
+            type="button"
+            class="showBtn"
+            value="vuoi Bannare questo utente?"
+            onclick="myFunction()"
+          />
+          <div id="myDIV" style="display: none">
+            <form
+              th:action="@{/utenteBan2/{utenteId}(utenteId=${utente.id})}"
+              method="post"
+            >
+              <p>
+                indica per quanti giorni vuoi bannarlo<input
+                  type="number"
+                  name="giorni"
+                  value="1"
+                  min="1"
+                  required
+                />
+                <input type="submit" value="banna" />
+              </p>
+            </form>
+            <form
+              th:action="@{/bannaAllTime2/{utenteId}(utenteId=${utente.id})}"
+              method="post"
+            >
+              <p><input type="submit" value="banna per sempre l'utente" /></p>
+            </form>
+          </div>
+        </div>
+        <!-- FINE PROVA BANNA -->
+        <!-- UTENTE SE E STATO BANNATO -->
+        <div th:if="${utente.getAttivo()==0}">
+          <b><p style="color: red">l'utente è stato bannato</p></b>
+          <form
+            th:action="@{/reactive2/{utenteId}(utenteId=${utente.id})}"
+            method="post"
+          >
+            <input type="submit" value="riattiva" />
+          </form>
+        </div>
+      </div>
+      <!-- div per solo admin -->
+    </div>
+    <!-- FINE PROVA -->
+
+    <script>
+      function myFunction() {
+        var x = document.getElementById("myDIV");
+        if (x.style.display === "none") {
+          x.style.display = "block";
+        } else {
+          x.style.display = "none";
+        }
+      }
+    </script>
+
+    <a
+      th:href="@{/areaPersonale}"
+      style="color: white; font-size: 25px; padding: 25px"
+      >indietro</a
+    >
+  </body>
+</html>

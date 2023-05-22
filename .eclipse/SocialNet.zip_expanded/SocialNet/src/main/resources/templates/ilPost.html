@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>il post</title>
+  </head>
+  <style>
+    h1 {
+      text-align: center;
+      color: white;
+    }
+    body {
+      background-color: #2a3557;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+    }
+
+    #utenteL::before {
+      content: "@"; /* Insert content that looks like bullets */
+      padding-right: 8px;
+      color: rgb(7, 233, 7); /* Or a color you prefer */
+    }
+    a {
+      color: #ecf0f2;
+      text-decoration: none;
+    }
+    #titolo {
+      color: orange;
+      margin: auto;
+      width: 50%;
+      padding: 1%;
+      text-align: center;
+      font-size: 35px;
+      font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+    }
+    #testo {
+      margin: auto;
+      width: 50%;
+      border: solid 2px;
+      background-color: white;
+      padding: 1%;
+      text-align: center;
+    }
+
+    #sezionePost {
+      padding: 2%;
+    }
+  </style>
+  <body>
+    <h1>NOTIFICA</h1>
+    <div id="sezionePost">
+      <p
+        th:text="|${post.utente.username} ${post.dataPost}|"
+        style="color: rgb(36, 221, 181)"
+      ></p>
+      <p th:text="${post.titolo}" id="titolo"></p>
+      <p th:text="${post.testo}" id="testo"></p>
+      <div th:each="c : ${post.commenti}">
+        <b>
+          <a
+            th:href="@{/profileUser/{utenteId}(utenteId=${c.utente.id})}"
+            th:text="|${c.utente.username} ${c.dataCommento}|"
+            id="utenteL"
+          ></a>
+        </b>
+        <p th:text="|${c.commento}|" style="color: white"></p>
+      </div>
+    </div>
+    <a th:href="@{/areaPersonale}" style="font-size: 25px; padding: 25px"
+      >indietro</a
+    >
+  </body>
+</html>
