@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"
+    ></script>
+    <title>modifica l'offerta</title>
+  </head>
+
+  <style>
+    body {
+      background: lightblue;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 15px;
+    }
+    h2 {
+      text-align: center;
+    }
+    .container {
+      margin: 2em 5em 3em 5em;
+      background: white;
+      padding: 2em 6em 2em 6em;
+    }
+    .testop {
+      font-size: 25px;
+    }
+
+    #btn2 {
+      padding: 5px;
+      border-radius: 5px;
+      transition: 0.5s;
+    }
+
+    #btn2:hover {
+      background: lightblue;
+      color: rgb(255, 106, 0);
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    a {
+      color: blue;
+      font-family: cursive;
+      font-size: 25px;
+    }
+
+    input[type="text"] {
+      width: 75%;
+      margin: 5px;
+    }
+  </style>
+
+  <body>
+    <h1>modifica</h1>
+    <div class="container">
+      <form
+        th:action="@{/salvaOfferta/{singleOfferta}(singleOfferta=${singleOfferta})}"
+        method="post"
+      >
+        <!------------NORMALI-------------- -->
+        <label for="subTitle"> sotto Titolo</label>
+        <br />
+        <input
+          type="text"
+          th:value="${offerta.subTitle}"
+          id="subTitle"
+          name="subTitle"
+        />
+        <br />
+        <label for="modalita">modalita</label>
+        <br />
+        <input
+          type="text"
+          th:value="${offerta.modalita}"
+          id="modalita"
+          name="modalita"
+        />
+        <br />
+        <label for="titolo">titolo</label>
+        <br />
+        <input
+          type="text"
+          th:value="${offerta.title}"
+          id="titolo"
+          name="title"
+        />
+        <br />
+        <label for="subSubTitle">Sotto sotto titolo</label>
+        <br />
+        <input
+          type="text"
+          th:value="${offerta.subSubTitle}"
+          id="subSubTitle"
+          name="subSubTitle"
+        />
+        <!-----------------------WHAT------------ -->
+        <br />
+        <label for="wht1">what</label>
+        <div th:each="ow:${offerta.what}">
+          <input type="text" th:value="${ow}" name="what" id="wht1" />
+        </div>
+
+        <div id="whatInp"></div>
+        <div id="addInput">aggiungi what</div>
+
+        <script>
+          $(document).ready(() => {
+            let inputCount = 0;
+
+            $("#addInput").on("click", () => {
+              inputCount++;
+              let template = `<div class='item'><input type="text" name="what" style="margin:5px"/><button class="remove">X</button></div>`;
+              $("#whatInp").append(template);
+            });
+
+            $("body").on("click", ".remove", (e) => {
+              $(e.target).parent("div").remove();
+            });
+          });
+        </script>
+        <!------------SOFT SKILL----------- -->
+        <br />
+
+        <!-- prova -->
+        <input type="text" name="soft_skills" id="softSkill" hidden />
+
+        <label>soft skill</label>
+        <div th:each="os:${offerta.soft_skills}">
+          <input type="text" th:value="${os}" name="soft_skills" />
+        </div>
+        <br />
+
+        <div id="sftInp"></div>
+        <div id="addInput2">aggiungi gli skill</div>
+
+        <script>
+          $(document).ready(() => {
+            let inputCount = 0;
+
+            $("#addInput2").on("click", () => {
+              inputCount++;
+              let template = `<div class='item'><input type="text" name="soft_skills" style="margin:5px" /><button class="remove">X</button></div>`;
+              $("#sftInp").append(template);
+            });
+
+            $("body").on("click", ".remove", (e) => {
+              $(e.target).parent("div").remove();
+            });
+          });
+        </script>
+
+        <!--------------------------REQUISIT------- -->
+        <input type="text" name="requisiti" hidden />
+
+        <label>requisiti</label>
+        <div th:each="re:${offerta.requisiti}">
+          <input type="text" th:value="${re}" name="requisiti" />
+        </div>
+        <br />
+        <div id="reInp"></div>
+        <div id="addInput3">aggiungi i requisiti</div>
+
+        <script>
+          $(document).ready(() => {
+            let inputCount = 0;
+
+            $("#addInput3").on("click", () => {
+              inputCount++;
+              let template = `<div class='item'><input type="text" name="requisiti" style="margin:5px"/><button class="remove">X</button></div>`;
+              $("#reInp").append(template);
+            });
+
+            $("body").on("click", ".remove", (e) => {
+              $(e.target).parent("div").remove();
+            });
+          });
+        </script>
+
+        <!----------------COSA OFFRIAMO ----------- -->
+
+        <input type="text" name="cosa_offriamo" id="offerta" hidden />
+
+        <label for="csf">cosa offriamo</label>
+        <div th:each="cos:${offerta.cosa_offriamo}">
+          <input
+            type="text"
+            th:value="${cos}"
+            name="cosa_offriamo"
+            id="csf"
+            hidden
+          />
+        </div>
+
+        <div id="cosInp"></div>
+        <div id="addInput4">aggiungi delle offerte</div>
+
+        <script>
+          $(document).ready(() => {
+            let inputCount = 0;
+
+            $("#addInput4").on("click", () => {
+              inputCount++;
+              let template2 = `<div class='item'><input type="text" name="cosa_offriamo" style="margin:5px" /><button class="remove">X</button></div>`;
+              $("#cosInp").append(template2);
+            });
+
+            $("body").on("click", ".remove", (e) => {
+              $(e.target).parent("div").remove();
+            });
+          });
+        </script>
+
+        <!--------------NICE TO HAVE----------- -->
+
+        <input type="text" name="nice_to_have" id="niceToHave" hidden />
+
+        <label>nice to have</label>
+        <div th:each="nth:${offerta.nice_to_have}">
+          <input type="text" th:value="${nth}" name="nice_to_have" />
+        </div>
+
+        <div id="nthInp"></div>
+        <div id="addInput5">aggiungi nice to have</div>
+
+        <script>
+          $(document).ready(() => {
+            let inputCount = 0;
+
+            $("#addInput5").on("click", () => {
+              inputCount++;
+              let template = `<div class='item'><input type="text" name="nice_to_have" style="margin:5px"/><button class="remove">X</button></div>`;
+              $("#nthInp").append(template);
+            });
+
+            $("body").on("click", ".remove", (e) => {
+              $(e.target).parent("div").remove();
+            });
+          });
+        </script>
+        <br />
+        <input type="submit" value="salva le modifiche" id="btn2" />
+      </form>
+    </div>
+    <a href="#" onclick="indietro()">annulla</a>
+  </body>
+
+  <script>
+    function indietro() {
+      let ciao = window.location.href;
+      var parts = ciao.split("/");
+      var lastChar = parts[parts.length - 1];
+
+      window.location = "http://localhost:8080/offerta/" + lastChar;
+    }
+  </script>
+</html>

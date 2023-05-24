@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>password dimenticato</title>
+  </head>
+  <body>
+    <h1>Ciao</h1>
+
+    <form th:action="sendEm" method="post">
+      <label for="username">username</label>
+      <input type="text" name="username" />
+      <br />
+
+      <label for="email">email</label>
+      <input type="text" name="email" />
+      <br />
+      <input type="submit" value="invia" />
+      <div th:if="${msg1 == 'email non esiste'}">
+        <p th:text="${msg1}" style="color: red"></p>
+      </div>
+      <div th:if="${msg1 != 'email non esiste'}">
+        <p th:text="${msg1}" style="color: rgb(21, 162, 13)"></p>
+      </div>
+    </form>
+  </body>
+</html>
