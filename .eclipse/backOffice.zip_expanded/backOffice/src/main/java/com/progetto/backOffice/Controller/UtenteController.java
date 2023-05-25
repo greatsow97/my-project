@@ -298,7 +298,7 @@ public class UtenteController {
 	 * ---------------------------------------------CANCELLA
 	 * OFFERTA-------------------
 	 */
-	@PostMapping("/CancellaOfferta/{singleOfferta}")
+	@GetMapping("/CancellaOfferta/{singleOfferta}")
 	public String CancellaOfferta(@PathVariable Integer singleOfferta)
 			throws StreamReadException, DatabindException, IOException {
 

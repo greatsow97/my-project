@@ -61,7 +61,7 @@
     <br />
     <div class="container">
       <h1 id="titolopag">OFFERTE</h1>
-      <div th:each="o:${offerte}">
+      <div th:each="o:${offerte}" th:id="${o.title}" class="classe">
         <!-- WHAT -->
         <h2 th:text="${o.subTitle}"></h2>
         <b
@@ -78,7 +78,7 @@
 
         <form
           th:action="@{/CancellaOfferta/{singleOfferta}(singleOfferta=${offerte.indexOf(o)})}"
-          method="post"
+          method="get"
         >
           <input type="submit" value="cancella offerta" />
         </form>
@@ -97,8 +97,8 @@
     $(document).ready(function () {
       $("#myInput").on("keyup", function () {
         var value = $(this).val().toLowerCase();
-        $(".container *").filter(function () {
-          $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1);
+        $(".classe").filter(function () {
+          $(this).toggle($(this).attr("id").toLowerCase().indexOf(value) > -1);
         });
         $("#solo").show();
       });

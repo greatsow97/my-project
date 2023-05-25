@@ -136,8 +136,10 @@
       </div>
       <br />
       <input type="button" onclick="modifica()" value="modifica" id="btncls" />
+      <input type="submit" value="cancella offerta" onclick="cancella()"/>
     </div>
   </body>
+
 
   <script>
     function modifica() {
@@ -147,6 +149,15 @@
 
       window.location = "http://localhost:8080/modifica/" + lastChar;
     }
+
+    function cancella() {
+      let ciao = window.location.href;
+      var parts = ciao.split("/");
+      var lastChar = parts[parts.length - 1];
+
+      window.location = "http://localhost:8080/CancellaOfferta/" + lastChar;
+    }
+
   </script>
 
   <a th:href="@{/offerte}">indietro</a>
