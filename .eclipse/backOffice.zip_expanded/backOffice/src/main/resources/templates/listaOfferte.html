@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+
+    <title>offerte</title>
+  </head>
+  <style>
+    #titolopag,
+    h1,
+    h2,
+    h3 {
+      text-align: center;
+    }
+
+    body {
+      background: lightblue;
+    }
+    #back {
+      float: right;
+      color: blue;
+      font-weight: bold;
+      font-size: 20px;
+      font-family: cursive;
+    }
+    .container {
+      margin: 2em 5em 3em 5em;
+      background: white;
+      padding: 2em 6em 2em 6em;
+      border-radius: 25px;
+    }
+    #solo {
+      color: blue;
+      font-weight: bold;
+      font-size: 20px;
+      font-family: cursive;
+    }
+    .deleteBtm {
+      border-radius: 10px;
+      height: 35px;
+      font-weight: bold;
+      transition: 0.5s;
+    }
+    .deleteBtm:hover {
+      border-radius: 10px;
+      height: 35px;
+      font-weight: bold;
+      background: lightblue;
+      color: red;
+      font-size: 15px;
+    }
+  </style>
+  <body>
+    <a th:href="@{/paginaIniziale}" id="back" style="text-decoration: none"
+      >indietro</a
+    >
+    <input type="text" id="myInput" placeholder="Search" />
+    <br />
+    <div class="container">
+      <h1 id="titolopag">OFFERTE</h1>
+      <div th:each="o:${offerte}" th:id="${o.title}" class="classe">
+        <!-- WHAT -->
+        <h2 th:text="${o.subTitle}"></h2>
+        <b
+          ><span style="display: inline; color: rgb(21, 86, 21)"
+            >modalita:</span
+          ></b
+        >
+        <p th:text="${o.modalita}"></p>
+        <h1 th:text="${o.title}"></h1>
+        <h3 th:text="${o.subSubTitle}"></h3>
+
+        <!-- fine -->
+        <!-- --------------ID OFFERTA-------- -->
+
+        <form
+          th:action="@{/CancellaOfferta/{singleOfferta}(singleOfferta=${offerte.indexOf(o)})}"
+          method="get"
+        >
+          <input type="submit" value="cancella offerta" />
+        </form>
+        <br />
+        <a
+          th:href="@{/offerta/{singleOfferta}(singleOfferta=${offerte.indexOf(o)})}"
+          id="solo"
+          style="text-decoration: none"
+          >vedi Offerta</a
+        >
+        <hr />
+      </div>
+    </div>
+  </body>
+  <script>
+    $(document).ready(function () {
+      $("#myInput").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        $(".classe").filter(function () {
+          $(this).toggle($(this).attr("id").toLowerCase().indexOf(value) > -1);
+        });
+        $("#solo").show();
+      });
+    });
+  </script>
+</html>

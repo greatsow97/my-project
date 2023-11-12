@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login</title>
+  </head>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: sans-serif;
+    }
+    body {
+      min-height: 100vh;
+      background: lightblue;
+      display: flex;
+    }
+    .container {
+      height: 10em;
+      position: relative;
+    }
+    .container {
+      text-align: center;
+      width: 100%;
+      background: lightblue;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      margin-right: -50%;
+      transform: translate(-50%, -50%);
+    }
+    a {
+      text-decoration: none;
+      font-size: 35px;
+      font-family: "Courier New", Courier, monospace;
+      font-weight: bold;
+      transition: 0.5s;
+    }
+    #primo:hover {
+      background: rgb(255, 145, 0);
+      color: white;
+    }
+
+    #secondo:hover {
+      background: rgb(255, 145, 0);
+      color: white;
+    }
+    h1 {
+      text-align: center;
+    }
+  </style>
+  <body>
+    <div class="container">
+      <a th:href="@{/primoAc}" id="primo">sono nuovo</a>
+      <br />
+      <br />
+      <a th:href="@{/loggato}" id="secondo">gia loggato</a>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>offerta</title>
+  </head>
+
+  <style>
+    body {
+      background: lightblue;
+    }
+    h1 {
+      text-align: center;
+      margin-top: 15px;
+    }
+    h2 {
+      text-align: center;
+    }
+    .container {
+      margin: 2em 5em 3em 5em;
+      background: white;
+      padding: 2em 6em 2em 6em;
+    }
+    .testop {
+      font-size: 25px;
+    }
+
+    #btncls {
+      padding: 5px;
+      border-radius: 5px;
+      transition: 0.5s;
+    }
+
+    #btncls:hover {
+      background: lightblue;
+      color: rgb(245, 127, 17);
+      font-weight: bold;
+      font-size: 15px;
+    }
+
+    a {
+      color: blue;
+      font-family: cursive;
+      font-size: 25px;
+      text-decoration: none;
+    }
+  </style>
+
+  <body>
+    <h1 id="titolo">L'OFFERTA</h1>
+
+    <div class="container">
+      <!-- SUBTITLE -->
+      <h2 th:text="${offerta.subTitle}"></h2>
+      <b
+        ><span style="display: inline; color: rgb(21, 86, 21)"
+          >modalita:</span
+        ></b
+      >
+      <p th:text="${offerta.modalita}"></p>
+      <h1 th:text="${offerta.title}"></h1>
+      <h3 th:text="${offerta.subSubTitle}"></h3>
+
+      <!---------------WHAT------------->
+      <b
+        ><p th:text="|what: |" style="color: rgb(21, 86, 21)" class="testop"></p
+      ></b>
+      <div style="border: solid; padding: 5px">
+        <div id="ilWhat" th:each="ow:${offerta.what}">
+          <p th:text="${ow}"></p>
+        </div>
+      </div>
+      <!-------------------SOFT SKILL--------- -->
+      <div
+        th:if="${offerta.soft_skills!= null && #arrays.length(offerta.soft_skills)>0}"
+      >
+        <b
+          ><p
+            th:text="|soft Skill: |"
+            style="color: rgb(21, 86, 21)"
+            class="testop"
+          ></p
+        ></b>
+        <div style="border: solid; padding: 5px">
+          <div id="softSkill" th:each="os:${offerta.soft_skills}">
+            <p th:text="${os}"></p>
+          </div>
+        </div>
+      </div>
+      <!-------------REQUSIITI----------- -->
+      <b
+        ><p
+          th:text="|requisiti: |"
+          style="color: rgb(21, 86, 21)"
+          class="testop"
+        ></p
+      ></b>
+      <div style="border: solid; padding: 5px">
+        <div th:if="${offerta.requisiti != null}">
+          <div id="requisiti" th:each="ore:${offerta.requisiti}">
+            <p th:text="${ore}"></p>
+          </div>
+        </div>
+      </div>
+      <!------------------ COSA OFFRIAMO------- -->
+      <b
+        ><p
+          th:text="|cosa offriamo: |"
+          style="color: rgb(21, 86, 21)"
+          class="testop"
+        ></p
+      ></b>
+      <div style="border: solid; padding: 5px">
+        <div id="cosaOfr" th:each="coso:${offerta.cosa_offriamo}">
+          <p th:text="${coso}"></p>
+        </div>
+      </div>
+      <!-----------NICE TO HAVE--------- -->
+      <div
+        th:if="${offerta.nice_to_have!= null && #arrays.length(offerta.nice_to_have)>0}"
+      >
+        <b
+          ><p
+            th:text="|nice to have: |"
+            style="color: rgb(21, 86, 21)"
+            class="testop"
+          ></p
+        ></b>
+        <div style="border: solid; padding: 5px">
+          <div id="nice_to_have" th:each="nth:${offerta.nice_to_have}">
+            <p th:text="${nth}"></p>
+          </div>
+        </div>
+      </div>
+      <br />
+      <input type="button" onclick="modifica()" value="modifica" id="btncls" />
+      <input type="submit" value="cancella offerta" onclick="cancella()"/>
+    </div>
+  </body>
+
+
+  <script>
+    function modifica() {
+      let ciao = window.location.href;
+      var parts = ciao.split("/");
+      var lastChar = parts[parts.length - 1];
+
+      window.location = "http://localhost:8080/modifica/" + lastChar;
+    }
+
+    function cancella() {
+      let ciao = window.location.href;
+      var parts = ciao.split("/");
+      var lastChar = parts[parts.length - 1];
+
+      window.location = "http://localhost:8080/CancellaOfferta/" + lastChar;
+    }
+
+  </script>
+
+  <a th:href="@{/offerte}">indietro</a>
+</html>

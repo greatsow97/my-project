@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>post</title>
+  </head>
+
+  <style>
+    body {
+      background-color: #2a3557;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    form textarea {
+      margin-bottom: 2px;
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+    }
+
+    h3 {
+      text-align: center;
+      color: white;
+    }
+
+    #sezionePost {
+      padding: 2%;
+    }
+
+    #utente::before {
+      content: "@"; /* Insert content that looks like bullets */
+      padding-right: 8px;
+      color: rgb(7, 233, 7); /* Or a color you prefer */
+    }
+
+    a {
+      color: #ecf0f2;
+      text-decoration: none;
+    }
+    #testo {
+      margin: auto;
+      width: 50%;
+      border: solid 2px;
+      background-color: white;
+      padding: 1%;
+      text-align: center;
+    }
+
+    #titolo {
+      color: orange;
+      margin: auto;
+      width: 50%;
+      padding: 1%;
+      text-align: center;
+      font-size: 35px;
+      font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+    }
+  </style>
+
+  <body>
+    <h1>I TUOI POST</h1>
+
+    <!-- CREA POST -->
+    <div>
+      <form th:action="@{/creaPost}" method="post" class="contenitore">
+        <h3>crea il tuo post</h3>
+        <textarea
+          name="titolo"
+          cols="40"
+          rows="1"
+          placeholder="descrizione"
+        ></textarea>
+        <br />
+        <textarea
+          name="testo"
+          id="post"
+          cols="40"
+          rows="4"
+          placeholder="scrivi un post"
+        ></textarea>
+        <input type="submit" value="crea post" />
+      </form>
+    </div>
+    <!-- LISTA POST -->
+    <div th:each="p:${listaPost}" id="sezionePost">
+      <b
+        ><p
+          th:text="|${p.utente.nome} ${p.dataPost}|"
+          style="color: rgb(7, 233, 7)"
+          id="utente"
+        ></p
+      ></b>
+
+      <p th:text="${p.titolo}" id="titolo"></p>
+      <p th:text="${p.testo}" id="testo"></p>
+      <!-- COMMENTI -->
+      <div th:each="c : ${p.commenti}">
+        <a
+          th:href="@{/profileUser/{utenteId}(utenteId=${c.utente.id})}"
+          th:text="| ${c.utente.nome} ${c.dataCommento}|"
+          id="utenteL"
+          style="color: rgb(7, 233, 7)"
+        ></a>
+
+        <p th:text="|${c.commento}|" style="color: white"></p>
+      </div>
+
+      <!-- COMMENTA -->
+      <form method="post" th:action="@{/commenta/{postId}(postId=${p.id})}">
+        <textarea
+          cols="40"
+          rows="2"
+          placeholder="commenta"
+          name="commento"
+        ></textarea>
+        <input type="submit" value="commenta" />
+      </form>
+      <hr />
+    </div>
+
+    <a th:href="@{/areaPersonale}" style="font-size: 25px; padding: 25px"
+      >indietro</a
+    >
+  </body>
+</html>

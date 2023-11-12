@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script
+      src="https://code.jquery.com/jquery-3.6.4.min.js"
+      integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8="
+      crossorigin="anonymous"
+    ></script>
+    <title>Homepage</title>
+  </head>
+
+  <style>
+    #addInput,
+    #addInput2,
+    #addInput3,
+    #addInput4,
+    #addInput5 {
+      display: inline-block;
+      color: #444;
+      border: 1px solid #ccc;
+      background: #ddd;
+      box-shadow: 0 0 5px -1px rgba(0, 0, 0, 0.2);
+      cursor: pointer;
+      vertical-align: middle;
+      max-width: 100px;
+      padding: 5px;
+      text-align: center;
+      margin: 10px;
+      transition-duration: 1s;
+    }
+
+    #addInput:hover,
+    #addInput2:hover,
+    #addInput3:hover,
+    #addInput4:hover,
+    #addInput5:hover {
+      background-color: rgb(90, 147, 228);
+      font-weight: bold;
+      color: yellow;
+    }
+
+    .box {
+      margin: 10px;
+    }
+    .btn {
+      padding: 5px;
+      transition-duration: 1s;
+    }
+
+    .btn:hover {
+      background-color: rgb(90, 147, 228);
+      font-weight: bold;
+      color: yellow;
+    }
+
+    body {
+      background: lightblue;
+    }
+
+    .superContainer {
+      margin: 2em 5em 3em 5em;
+      background: white;
+      padding: 1em 6em 2em 4em;
+      font-family: cursive;
+      border-radius: 20px;
+    }
+    a {
+      text-decoration: none;
+    }
+
+    .back {
+      color: blue;
+      font-weight: bold;
+      font-size: 20px;
+    }
+  </style>
+
+  <body>
+    <h1>Benvenuto nel homepage</h1>
+    <div class="superContainer">
+      <div class="container">
+        <form th:action="@{/creaOfferta}" method="post">
+          <!-- ---------------WHAT------------------- -->
+          <div class="box">
+            <label for="immagine">immagine</label>
+            <select id="immagine">
+              <option value="none">none</option>
+              <option value="analista">Analista</option>
+              <option value="sistemista">Sistemista</option>
+              <option value="developer">Developer</option>
+              <option value="security">Security</option>
+            </select>
+          </div>
+          <div class="box">
+            <label for="what">what:</label>
+            <input type="text" name="what" style="width: 85%" id="what" />
+            <div id="whatInp"></div>
+            <div id="addInput">aggiungi what</div>
+
+            <script>
+              $(document).ready(() => {
+                let inputCount = 0;
+
+                $("#addInput").on("click", () => {
+                  inputCount++;
+                  let template = `<div class='item'><input type="text" name="what" style="width: 85%"/><button class="remove">X</button></div>`;
+                  $("#whatInp").append(template);
+                });
+
+                $("body").on("click", ".remove", (e) => {
+                  $(e.target).parent("div").remove();
+                });
+              });
+            </script>
+          </div>
+          <!---------------------- SUBTITLE-------------->
+          <div class="box">
+            <label for="subtitle">sottotitolo</label>
+            <input
+              type="text"
+              name="subTitle"
+              id="subtitle"
+              style="width: 85%"
+            />
+          </div>
+          <!------------------------SOFT SKILL----------- -->
+          <div class="box">
+            <input
+              type="text"
+              name="soft_skills"
+              id="softSkill"
+              style="width: 85%"
+              hidden
+            />
+
+            <div id="sftSkillInp"></div>
+            <div id="addInput2">aggiungi Soft Skill</div>
+
+            <script>
+              $(document).ready(() => {
+                let inputCount = 0;
+
+                $("#addInput2").on("click", () => {
+                  inputCount++;
+                  let template2 = `<div class='item'><input type="text" name="soft_skills" style="width: 85%"/><button class="remove">X</button></div>`;
+                  $("#sftSkillInp").append(template2);
+                });
+
+                $("body").on("click", ".remove", (e) => {
+                  $(e.target).parent("div").remove();
+                });
+              });
+            </script>
+          </div>
+          <!-- ---------------REQUISITI------------- -->
+          <div class="box">
+            <label for="requisiti">requsiti</label>
+
+            <input
+              type="text"
+              name="requisiti"
+              id="requisiti"
+              style="width: 85%"
+            />
+
+            <div id="reqInp"></div>
+            <div id="addInput3">aggiungi requisiti</div>
+
+            <script>
+              $(document).ready(() => {
+                let inputCount = 0;
+
+                $("#addInput3").on("click", () => {
+                  inputCount++;
+                  let template3 = `<div class='item'><input type="text" name="requisiti" style="width: 85%"/><button class="remove">X</button></div>`;
+                  $("#reqInp").append(template3);
+                });
+
+                $("body").on("click", ".remove", (e) => {
+                  $(e.target).parent("div").remove();
+                });
+              });
+            </script>
+          </div>
+          <!-- -------------OFFERTA -------------------->
+          <div class="box">
+            <label for="offerta">cosa offriamo</label>
+
+            <input
+              type="text"
+              name="cosa_offriamo"
+              id="offerta"
+              style="width: 85%"
+            />
+
+            <div id="offertaInp"></div>
+            <div id="addInput4">aggiungi offerta</div>
+
+            <script>
+              $(document).ready(() => {
+                let inputCount = 0;
+
+                $("#addInput4").on("click", () => {
+                  inputCount++;
+                  let template4 = `<div class='item'><input type="text" name="cosa_offriamo" style="width: 85%"/><button class="remove">X</button></div>`;
+                  $("#offertaInp").append(template4);
+                });
+
+                $("body").on("click", ".remove", (e) => {
+                  $(e.target).parent("div").remove();
+                });
+              });
+            </script>
+          </div>
+          <!------------------------------NICE TO HAVE------------------- -->
+          <div class="box">
+            <input
+              type="text"
+              name="nice_to_have"
+              id="niceToHave"
+              style="width: 85%"
+              hidden
+            />
+
+            <div id="NTHInp"></div>
+            <div id="addInput5">aggiungi IL NICE TO HAVE</div>
+
+            <script>
+              $(document).ready(() => {
+                let inputCount = 0;
+
+                $("#addInput5").on("click", () => {
+                  inputCount++;
+                  let template5 = `<div class='item'><input type="text" name="nice_to_have" style="width: 85%"/><button class="remove">X</button></div>`;
+                  $("#NTHInp").append(template5);
+                });
+
+                $("body").on("click", ".remove", (e) => {
+                  $(e.target).parent("div").remove();
+                });
+              });
+            </script>
+          </div>
+          <!------------------------------MODALITA--------------- -->
+          <div class="box">
+            <label for="modalita">modalità</label>
+
+            <input
+              type="text"
+              id="modalita"
+              name="modalita"
+              style="width: 85%"
+            />
+          </div>
+          <!---------------------------------- TITOLO-------------- -->
+          <div class="box">
+            <label for="titolo">titolo</label>
+
+            <input type="text" id="titolo" name="title" style="width: 85%" />
+          </div>
+          <!-- ------------------SOTTO SOTTO TITOLO ----------------------->
+          <div class="box">
+            <label for="subSubTitle">sotto sotto titolo</label>
+
+            <input
+              type="text"
+              id="subSubTitle"
+              name="subSubTitle"
+              style="width: 85%"
+            />
+          </div>
+          <input type="submit" value="offri" class="btn" />
+        </form>
+      </div>
+
+      <br />
+      <a th:href="@{/offerte}" class="back">lista offerte</a>
+    </div>
+    <a th:href="@{/loggato}" class="back" style="padding: 35px">indietro</a>
+
+    <!-- SCRIPT -->
+  </body>
+</html>

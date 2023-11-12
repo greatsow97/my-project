@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>lista Utenti</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+
+    <style>
+      body {
+        background-color: #263a4b;
+        margin: 0;
+        padding: 0;
+        height: 100vh;
+        -webkit-overflow-scrolling: touch;
+      }
+
+      #contenitore {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      input[type="button"] {
+        border-radius: 8px;
+        background: #e5ef5c;
+        height: 40px;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        outline: none;
+      }
+
+      input[type="submit"] {
+        background: #e5ef5c;
+        font-size: 18px;
+        border-radius: 8px;
+        font-weight: 700;
+        cursor: pointer;
+        outline: none;
+      }
+
+      h1 {
+        text-align: center;
+        color: white;
+        padding: 10px 0px;
+      }
+      div {
+        margin: 10px;
+      }
+      p {
+        color: white;
+      }
+      a {
+        color: #ecf0f2;
+        text-decoration: none;
+      }
+
+      #usname {
+        color: rgb(7, 233, 7); /* Or a color you prefer */
+      }
+
+      #usname::before {
+        content: "@"; /* Insert content that looks like bullets */
+        color: rgb(7, 233, 7); /* Or a color you prefer */
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Lista Utenti</h1>
+    <!-- RUOLO E PROFILO -->
+
+    <div th:each="u:${list}" id="contenitore">
+      <b
+        ><a
+          th:href="@{/profileUser/{utenteId}(utenteId=${u.id})}"
+          th:text="${u.username}"
+          style="font-size: 25px"
+          id="usname"
+        ></a
+      ></b>
+      <img th:src="${u.img}" width="5%" />
+      <p th:text="|nome: ${u.nome}|"></p>
+      <p th:text="|cognome: ${u.cognome}|"></p>
+      <p th:text="|email: ${u.email}|"></p>
+      <p th:text="|ruolo: ${u.ruolo.ruolo}|"></p>
+
+      <form th:action="@{/cambia/{utenteId}(utenteId=${u.id})}">
+        <input type="submit" value="cambia ruolo" />
+      </form>
+
+      <!-- Banna -->
+      <div th:if="${u.getAttivo()==1}">
+        <input
+          type="button"
+          class="showBtn"
+          value="vuoi Bannare questo utente?"
+        />
+
+        <div class="hideme" style="display: none">
+          <form
+            th:action="@{/utenteBan/{utenteId}(utenteId=${u.id})}"
+            method="post"
+          >
+            <p>
+              indica per quanti giorni vuoi bannarlo<input
+                type="number"
+                name="giorni"
+                value="1"
+                min="1"
+              />
+              <input type="submit" value="banna" />
+            </p>
+          </form>
+
+          <form
+            th:action="@{/bannaAllTime/{utenteId}(utenteId=${u.id})}"
+            method="post"
+          >
+            <p><input type="submit" value="banna per sempre l'utente" /></p>
+          </form>
+        </div>
+      </div>
+
+      <!--  -->
+
+      <!-- attiva utente -->
+      <div th:if="${u.getAttivo()==0}">
+        <b><p style="color: red">l'utente è stato bannato</p></b>
+        <form
+          th:action="@{/reactive/{utenteId}(utenteId=${u.id})}"
+          method="post"
+        >
+          <input type="submit" value="riattiva" />
+        </form>
+      </div>
+      <hr style="border: solid 2px white; width: 100%" />
+    </div>
+
+    <a
+      th:href="@{/areaPersonale}"
+      style="color: white; font-size: 25px; padding: 25px"
+      >indietro</a
+    >
+  </body>
+
+  <script>
+    $(".showBtn").click(function () {
+      if ($(this).hasClass("active")) {
+        $(this).removeClass("active");
+        $(".hideme").slideUp();
+      } else {
+        $(".hideme").slideUp();
+        $(".showBtn").removeClass("active");
+        $(this).addClass("active");
+        $(this).next().filter(".hideme").slideDown();
+      }
+    });
+  </script>
+</html>
