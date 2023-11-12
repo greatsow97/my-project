@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+    <title>Area Personale</title>
+  </head>
+
+  <style>
+    @import url(https://fonts.googleapis.com/css?family=Open+Sans:400,700,400italic);
+    body {
+      background-color: #2a3557;
+      line-height: 200%;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+    }
+
+    #subscribe {
+      background: #ddd;
+      padding: 15px 30px 15px 30px;
+      margin: 10px;
+      border: none;
+      cursor: pointer;
+      border-radius: 10px;
+    }
+
+    input {
+      width: 100%;
+      height: 55px;
+      background-color: #eee;
+      border: none;
+      padding-left: 15px;
+      outline: none;
+      font-weight: 600;
+      position: relative;
+      border-radius: 10px;
+      margin: 10px;
+    }
+    .container {
+      width: 800px;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      font-size: 32px;
+      color: #fff !important;
+    }
+
+    h3 {
+      font-size: 16px;
+      color: #fff;
+    }
+
+    p {
+      font-size: 16px;
+      color: #fff;
+    }
+
+    .button {
+      margin-top: 30px;
+      padding: 2px;
+      -webkit-transition: all linear 0.15s;
+      transition: all linear 0.15s;
+      border-radius: 3px;
+      background: #fff;
+      font-size: 22px;
+      font-weight: bold;
+      text-decoration: none;
+      text-transform: uppercase;
+      color: #333;
+    }
+
+    .wrapper {
+      width: 100%;
+      height: 100%;
+      display: none;
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      content: "";
+    }
+
+    .popup-box {
+      width: 400px;
+      padding: 70px;
+      transform: translate(-50%, -50%) scale(0.5);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      box-shadow: 0px 2px 16px rgba(255, 255, 255, 0.9);
+      border-radius: 20px;
+      text-align: center;
+    }
+    .popup-box h2 {
+      color: #1a1a1a;
+    }
+    .popup-box h3 {
+      color: #888;
+    }
+    .popup-box .close-button {
+      width: 35px;
+      height: 35px;
+      display: inline-block;
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      -webkit-transition: all ease 0.5s;
+      transition: all ease 0.5s;
+      border-radius: 1000px;
+      background: blue;
+      font-weight: bold;
+      text-decoration: none;
+      color: #fff;
+      line-height: 190%;
+    }
+    .popup-box .close-button:hover {
+      -webkit-transform: rotate(180deg);
+      transform: rotate(180deg);
+      background: lightblue;
+      color: black;
+    }
+
+    .transform-in,
+    .transform-out {
+      display: block;
+      -webkit-transition: all ease 0.5s;
+      transition: all ease 0.5s;
+      background: rgb(205, 201, 201);
+    }
+
+    .transform-in {
+      -webkit-transform: translate(-50%, -50%) scale(1);
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .transform-out {
+      -webkit-transform: translate(-50%, -50%) scale(0.5);
+      transform: translate(-50%, -50%) scale(0.5);
+    }
+
+    h1 {
+      text-align: center;
+      color: white;
+    }
+
+    #sezionePost {
+      padding: 2%;
+    }
+
+    #utenteL::before {
+      content: "@"; /* Insert content that looks like bullets */
+      color: white; /* Or a color you prefer */
+    }
+
+    #titolo {
+      color: orange;
+      margin: auto;
+      width: 50%;
+      padding: 1%;
+      text-align: center;
+      font-size: 35px;
+      font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+        "Lucida Sans", Arial, sans-serif;
+    }
+
+    #testo {
+      border-radius: 50px;
+      margin: auto;
+      width: 50%;
+      border: solid 2px;
+      background-color: white;
+      padding: 1%;
+      text-align: center;
+    }
+
+    a {
+      color: #ecf0f2;
+      text-decoration: none;
+    }
+
+    #uscita {
+      font-size: 25px;
+      padding: 25px;
+    }
+  </style>
+  <body>
+    <!-- PROFILO -->
+    <h1 th:text="|Benvenuto ${session.utenteLoggato.username}|"></h1>
+    <img th:src="${session.utenteLoggato.img}" width="25%" />
+    <!-- ////////////prova modale///////////////////// -->
+    <div class="container">
+      <a class="button popup-button" href="#">carica immagine</a>
+    </div>
+
+    <!-- ////////////fine prova modale///////////////////// -->
+
+    <!-- ///////form per il modale///////// -->
+    <div class="wrapper">
+      <div class="popup-box">
+        <h2>Carica un immagine di profilo</h2>
+        <a class="close-button popup-close" href="#">x</a>
+        <div class="form-group">
+          <!--    il form    -->
+          <form
+            th:action="@{/utenti/save}"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            <div>
+              <input
+                type="file"
+                name="image"
+                accept="image/png, image/jpeg "
+                required
+              />
+
+              <input type="submit" value="carica" />
+            </div>
+          </form>
+          <!--       fine form -->
+        </div>
+      </div>
+    </div>
+
+    <p
+      th:text="| ${session.utenteLoggato.nome} ${session.utenteLoggato.cognome}|"
+      id="utente"
+      style="color: white"
+    ></p>
+    <hr />
+
+    <div th:each="n:${notifiche}">
+      <a th:href="@{/ilPost/{postId}(postId=${n.id})}">
+        <div th:each="c:${n.commenti}" th:if="${c.visto == 0}">
+          <p
+            th:text="|${c.utente.nome} ha comentato il tuo post|"
+            style="color: white"
+          ></p>
+        </div>
+      </a>
+    </div>
+    <!-- FINE PROVA -->
+    <div th:if="${session.utenteLoggato.ruolo.id == 1}">
+      <!-- LINK -->
+      <a th:href="@{/listaUtenti}">lista Utenti</a>
+    </div>
+    <a th:href="@{/listaPost}">guarda i Post</a>
+    <br />
+    <hr />
+    <!-- POST -->
+    <div th:each="up:${session.utenteLoggato.post}" id="sezionePost">
+      <p
+        th:text="|@${session.utenteLoggato.username}|"
+        style="color: rgb(7, 233, 7)"
+        id="Utente"
+      ></p>
+      <p th:text="${up.titolo}" id="titolo" style="color: orange"></p>
+      <p th:text="${up.testo}" id="testo" style="color: black"></p>
+
+      <div th:each="c : ${up.commenti}">
+        <a
+          th:href="@{/profileUser/{utenteId}(utenteId=${c.utente.id})}"
+          th:text="| ${c.utente.nome} ${c.dataCommento}|"
+          id="utenteL"
+          style="color: white"
+        ></a>
+
+        <p th:text="|${c.commento}|" style="color: white"></p>
+      </div>
+      <hr />
+    </div>
+
+    <!-- FINE POST -->
+
+    <!-- LOG OUT -->
+    <a href="javascript: document.logoutForm.submit()" id="uscita"> Logout </a>
+
+    <form
+      name="logoutForm"
+      th:action="@{/logout}"
+      method="post"
+      th:hidden="true"
+    >
+      <input hidden type="submit" value="Logout" />
+    </form>
+
+    <script>
+      $(document).ready(function () {
+        $(".popup-button").click(function (e) {
+          $(".wrapper").fadeIn(500);
+          $(".popup-box").removeClass("transform-out").addClass("transform-in");
+
+          e.preventDefault();
+        });
+
+        $(".popup-close").click(function (e) {
+          $(".wrapper").fadeOut(500);
+          $(".popup-box").removeClass("transform-in").addClass("transform-out");
+
+          e.preventDefault();
+        });
+      });
+    </script>
+  </body>
+</html>
